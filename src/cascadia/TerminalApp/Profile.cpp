@@ -26,6 +26,9 @@ static constexpr std::string_view ForegroundKey{ "foreground" };
 static constexpr std::string_view BackgroundKey{ "background" };
 static constexpr std::string_view SelectionBackgroundKey{ "selectionBackground" };
 static constexpr std::string_view TabTitleKey{ "tabTitle" };
+static constexpr std::string_view TabForegroundKey{ "tabForeground" };
+static constexpr std::string_view TabBackgroundKey{ "tabBackground" };
+
 static constexpr std::string_view SuppressApplicationTitleKey{ "suppressApplicationTitle" };
 static constexpr std::string_view HistorySizeKey{ "historySize" };
 static constexpr std::string_view SnapOnInputKey{ "snapOnInput" };
@@ -66,6 +69,8 @@ Profile::Profile(const std::optional<GUID>& guid) :
 
     _defaultForeground{},
     _defaultBackground{},
+    _defaultTabForeground{},
+    _defaultTabBackground{},
     _selectionBackground{},
     _cursorColor{},
     _tabTitle{},
@@ -186,6 +191,14 @@ TerminalSettings Profile::CreateTerminalSettings(const std::unordered_map<std::w
     if (_defaultBackground)
     {
         terminalSettings.DefaultBackground(_defaultBackground.value());
+    }
+    if (_defaultTabBackground)
+    {
+        terminalSettings.DefaultTabBackground(_defaultTabBackground.value());
+    }
+    if (_defaultTabForeground)
+    {
+        terminalSettings.DefaultTabForeground(_defaultTabForeground.value());
     }
     if (_selectionBackground)
     {
@@ -372,6 +385,8 @@ void Profile::LayerJson(const Json::Value& json)
     // Core Settings
     JsonUtils::GetValueForKey(json, ForegroundKey, _defaultForeground);
     JsonUtils::GetValueForKey(json, BackgroundKey, _defaultBackground);
+    JsonUtils::GetValueForKey(json, TabBackgroundKey, _defaultTabBackground);
+    JsonUtils::GetValueForKey(json, TabForegroundKey, _defaultTabForeground);
     JsonUtils::GetValueForKey(json, SelectionBackgroundKey, _selectionBackground);
     JsonUtils::GetValueForKey(json, CursorColorKey, _cursorColor);
     JsonUtils::GetValueForKey(json, ColorSchemeKey, _schemeName);
@@ -454,6 +469,16 @@ void Profile::SetDefaultForeground(til::color defaultForeground) noexcept
 void Profile::SetDefaultBackground(til::color defaultBackground) noexcept
 {
     _defaultBackground = defaultBackground;
+}
+
+void Profile::SetDefaultTabBackground(til::color defaultTabBackground) noexcept
+{
+    _defaultTabBackground = defaultTabBackground;
+}
+
+void Profile::SetDefaultTabForeground(til::color defaultTabForeground) noexcept
+{
+    _defaultTabForeground = defaultTabForeground;
 }
 
 void Profile::SetSelectionBackground(til::color selectionBackground) noexcept

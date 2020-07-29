@@ -48,6 +48,8 @@ public:
     std::array<til::color, COLOR_TABLE_SIZE>& GetTable() noexcept;
     til::color GetForeground() const noexcept;
     til::color GetBackground() const noexcept;
+    til::color GetTabForeground() const noexcept;
+    til::color GetTabBackground() const noexcept;
     til::color GetSelectionBackground() const noexcept;
     til::color GetCursorColor() const noexcept;
 
@@ -58,6 +60,8 @@ private:
     std::array<til::color, COLOR_TABLE_SIZE> _table;
     til::color _defaultForeground;
     til::color _defaultBackground;
+    til::color _defaultTabForeground;
+    til::color _defaultTabBackground;
     til::color _selectionBackground;
     til::color _cursorColor;
 

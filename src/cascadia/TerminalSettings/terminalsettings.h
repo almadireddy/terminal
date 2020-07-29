@@ -41,6 +41,9 @@ namespace winrt::Microsoft::Terminal::Settings::implementation
 
         GETSET_PROPERTY(uint32_t, DefaultForeground, DEFAULT_FOREGROUND_WITH_ALPHA);
         GETSET_PROPERTY(uint32_t, DefaultBackground, DEFAULT_BACKGROUND_WITH_ALPHA);
+        GETSET_PROPERTY(uint32_t, DefaultTabForeground, DEFAULT_BACKGROUND_WITH_ALPHA);
+        GETSET_PROPERTY(uint32_t, DefaultTabBackground, DEFAULT_FOREGROUND_WITH_ALPHA);
+        
         GETSET_PROPERTY(uint32_t, SelectionBackground, DEFAULT_FOREGROUND);
         GETSET_PROPERTY(int32_t, HistorySize, DEFAULT_HISTORY_SIZE);
         GETSET_PROPERTY(int32_t, InitialRows, 30);

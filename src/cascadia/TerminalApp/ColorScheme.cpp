@@ -16,6 +16,8 @@ using namespace winrt::Microsoft::Terminal::TerminalControl;
 static constexpr std::string_view NameKey{ "name" };
 static constexpr std::string_view ForegroundKey{ "foreground" };
 static constexpr std::string_view BackgroundKey{ "background" };
+static constexpr std::string_view TabForegroundKey{ "tabForeground" };
+static constexpr std::string_view TabBackgroundKey{ "tabBackground" };
 static constexpr std::string_view SelectionBackgroundKey{ "selectionBackground" };
 static constexpr std::string_view CursorColorKey{ "cursorColor" };
 static constexpr std::array<std::string_view, 16> TableColors = {
@@ -42,6 +44,8 @@ ColorScheme::ColorScheme() :
     _table{},
     _defaultForeground{ DEFAULT_FOREGROUND_WITH_ALPHA },
     _defaultBackground{ DEFAULT_BACKGROUND_WITH_ALPHA },
+    _defaultTabForeground{ DEFAULT_BACKGROUND_WITH_ALPHA },
+    _defaultTabBackground{ DEFAULT_FOREGROUND_WITH_ALPHA },
     _selectionBackground{ DEFAULT_FOREGROUND },
     _cursorColor{ DEFAULT_CURSOR_COLOR }
 {
@@ -52,6 +56,8 @@ ColorScheme::ColorScheme(std::wstring name, til::color defaultFg, til::color def
     _table{},
     _defaultForeground{ defaultFg },
     _defaultBackground{ defaultBg },
+    _defaultTabForeground{ defaultBg },
+    _defaultTabBackground{ defaultFg },
     _selectionBackground{ DEFAULT_FOREGROUND },
     _cursorColor{ cursorColor }
 {
@@ -72,6 +78,8 @@ void ColorScheme::ApplyScheme(TerminalSettings terminalSettings) const
 {
     terminalSettings.DefaultForeground(static_cast<COLORREF>(_defaultForeground));
     terminalSettings.DefaultBackground(static_cast<COLORREF>(_defaultBackground));
+    terminalSettings.DefaultTabBackground(static_cast<COLORREF>(_defaultTabBackground));
+    terminalSettings.DefaultTabForeground(static_cast<COLORREF>(_defaultTabForeground));
     terminalSettings.SelectionBackground(static_cast<COLORREF>(_selectionBackground));
     terminalSettings.CursorColor(static_cast<COLORREF>(_cursorColor));
 
@@ -128,6 +136,8 @@ void ColorScheme::LayerJson(const Json::Value& json)
     JsonUtils::GetValueForKey(json, NameKey, _schemeName);
     JsonUtils::GetValueForKey(json, ForegroundKey, _defaultForeground);
     JsonUtils::GetValueForKey(json, BackgroundKey, _defaultBackground);
+    JsonUtils::GetValueForKey(json, TabForegroundKey, _defaultTabForeground);
+    JsonUtils::GetValueForKey(json, TabBackgroundKey, _defaultTabBackground);
     JsonUtils::GetValueForKey(json, SelectionBackgroundKey, _selectionBackground);
     JsonUtils::GetValueForKey(json, CursorColorKey, _cursorColor);
 
@@ -157,6 +167,16 @@ til::color ColorScheme::GetForeground() const noexcept
 til::color ColorScheme::GetBackground() const noexcept
 {
     return _defaultBackground;
+}
+
+til::color ColorScheme::GetTabForeground() const noexcept
+{
+    return _defaultTabForeground;
+}
+
+til::color ColorScheme::GetTabBackground() const noexcept
+{
+    return _defaultTabBackground;
 }
 
 til::color ColorScheme::GetSelectionBackground() const noexcept
