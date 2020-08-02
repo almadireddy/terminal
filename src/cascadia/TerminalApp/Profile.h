@@ -75,6 +75,7 @@ public:
     void SetUseAcrylic(bool useAcrylic) noexcept;
     void SetDefaultForeground(til::color defaultForeground) noexcept;
     void SetDefaultBackground(til::color defaultBackground) noexcept;
+    void SetDefaultTabForeground(til::color defaultTabBackground) noexcept;
     void SetSelectionBackground(til::color selectionBackground) noexcept;
     void SetCloseOnExitMode(CloseOnExitMode mode) noexcept;
     void SetConnectionType(GUID connectionType) noexcept;
@@ -114,6 +115,8 @@ private:
 
     std::optional<til::color> _defaultForeground;
     std::optional<til::color> _defaultBackground;
+    std::optional<til::color> _defaultTabForeground;
+    std::optional<til::color> _defaultTabBackground;
     std::optional<til::color> _selectionBackground;
     std::optional<til::color> _cursorColor;
     std::optional<std::wstring> _tabTitle;
